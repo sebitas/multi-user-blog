@@ -17,17 +17,22 @@ import jinja2
 import codecs
 import re
 
-from classes.handler import Handler
-from classes.welcome import Welcome
-from classes.blog import *
-from classes.post import *
-from classes.sign import *
+from classes.welcome_page import Welcome
+from classes.blog_page import *
+from classes.post_page import *
+from classes.sign_page import *
 
-app = webapp2.WSGIApplication([('/blog/newpost', NewPost),
+app = webapp2.WSGIApplication([('/newpost', NewPost),
                                ('/welcome', Welcome),
                                ('/blog', Blog),
                                (r'/blog/(\d+)', PostHandler),
                                ('/signup', SignUp),
+                               ('/signout', SignOut),
+                               ('/signin', SignIn),
+                               ('/blog/delete', DeletePost),
+                               ('/blog/editpost', EditPost),
+                               ('/blog/likepost', LikePost),
+                               ('/blog/unlikepost', UnLikePost)
                                ],
                             debug=True)
 
