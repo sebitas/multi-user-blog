@@ -4,7 +4,25 @@
     <title></title>
   </head>
   <body>
-    <h1>My Blog!</h1>
+    <h2>Comment Post!</h2>
+    <form method="post" action="/blog/commentpost">
+      <input type="hidden" name="post_id" value={{post_id}}>
+
+      <div>Subject</div>
+      <input type="text" name="subject" value="{{subject}}">
+
+      <div>Content</div>
+      <textarea name="content" rows="4" cols="50">{{content}}</textarea>
+
+      <input type="submit" name="">
+    </form>
+    {{error}}
+    <hr>
+    <h1>Main Comment:</h1>
+    <h1 name ="subject" class ="subject">Subject: {{ parent_post.subject }}</h1>
+    <h3 name ="content" class ="content">Content: {{ parent_post.content | safe }}
+    </h3>
+    <hr>
     {% for i in posts %}
       <h2 name ="subject" class ="subject">{{ i.subject }}</h2>
       <div name ="content" class ="content">{{ i.content | safe }}
@@ -31,10 +49,6 @@
         <input type="submit" value="UnLike"></input>
       </form>
 
-      <form action="/blog/commentpost" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="Comment"></input>
-      </form>
       <hr>
     {% endfor %}
   </body>

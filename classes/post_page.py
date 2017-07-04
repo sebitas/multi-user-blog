@@ -1,5 +1,6 @@
 from classes.handler import BlogHandler
 from classes.blog_entry import BlogEntry
+from classes.blog_entry import main_comments_key
 
 class NewPost(BlogHandler):
   def render_submit_post(self,subject = "", content = "", error = ""):
@@ -13,7 +14,7 @@ class NewPost(BlogHandler):
 
     if subject and content:
       a = BlogEntry(subject = subject, content = content,
-        user_post_id = id_str, likes_count = 0)
+        user_post_id = id_str, likes_count = 0, parent = main_comments_key())
       a.put()
       str = "/blog/%d" % a.key().id()
       self.redirect(str)
@@ -29,10 +30,11 @@ class NewPost(BlogHandler):
 
 class PostHandler(BlogHandler):
   def get(self, id):
-    post =  BlogEntry.get_by_id(long(id))
+    post =  BlogEntry.by_id(long(id))
     if not post:
       self.redirect("/blog")
-    post.content = post.content.replace('\n','<br>')
-    t = []
-    t.append(post)
-    self.render("blog.html", posts = t)
+    else:
+      post.content = post.content.replace('\n','<br>')
+      t = []
+      t.append(post)
+      self.render("blog.html", posts = t)
