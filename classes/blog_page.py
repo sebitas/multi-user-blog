@@ -5,7 +5,7 @@ from classes.handler import BlogHandler
 class Blog(Handler):
   def render_front(self, title = "", art = "", error = ""):
 
-    posts = db.GqlQuery("SELECT * FROM BlogEntry order by created desc")
+    posts = BlogEntry.get_all_main_comments()
 
     t = [];
 
@@ -154,5 +154,74 @@ class UnLikePost(BlogHandler):
       self.render_front(msg = "You cant't unlike this post")
     else:
       self.render_front(msg = "You unliked the post")
+
+class CommentPost(BlogHandler):
+  subject = ""
+  content = ""
+  post_id = ""
+
+  def get_son_posts(self, post_id):
+    posts = BlogEntry.by_id_get_sons(post_id)
+    result = []
+
+    for i,s in enumerate(posts):
+      s.content = s.content.replace('\n','<br>')
+      result.append(s)
+
+    return result
+
+  def get_parent_post(self, post_id):
+    result = BlogEntry.by_id(post_id)
+
+    if result:
+      result.content = result.content.replace('\n','<br>')
+
+    return result
+
+  def render_front(self, error = "", posts = "", post_id = "",
+                  subject = "", content = "", parent_post = ""):
+
+    self.render('commentpost.html', error = error,
+                posts = posts, post_id = post_id,
+                subject = subject, content = content,
+                parent_post = parent_post)
+
+  def get(self):
+    self.render_front(post_id = self.post_id)
+
+  def commentpost(self, subject, content, parent_post):
+    result = True
+    id_str = '%d' % self.user.key().id()
+
+    if self.subject and self.content:
+      a = BlogEntry(subject = subject, content = content,
+        user_post_id = id_str, likes_count = 0, parent = main_comments_key(parent_post.key().id()))
+      a.put()
+    else:
+      result = False
+
+    return result
+
+  def post(self):
+    self.subject = self.request.get("subject")
+    self.content = self.request.get("content")
+    self.post_id = self.request.get("post_id")
+    son_posts = self.get_son_posts(self.post_id)
+    parent_post = self.get_parent_post(self.post_id)
+    error = ""
+
+    if not self.user:
+      self.redirect('/signin')
+
+    if not self.commentpost(self.content, self.subject, parent_post):
+      error = "Please complete subject and content to comment" + self.post_id
+
+    self.render_front(subject = self.subject,
+                      content = self.content,
+                      post_id = self.post_id,
+                      posts = son_posts,
+                      parent_post = parent_post,
+                      error = error
+                      )
 
 
