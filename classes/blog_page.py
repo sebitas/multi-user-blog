@@ -44,12 +44,16 @@ class DeletePost(BlogHandler):
     post = BlogEntry.by_id(post_id, post_parent_id)
     error = ""
     success = ""
+
     if not post:
       error = "User id %s not found" % (post_id)
+    
     else:
+      
       if str(post.user_post_id) == str(self.user.key().id()):
         post.delete()
         success = "Blog post with id %s was found and deleted!" % (post_id)
+      
       else:
         error = "You are not owner/creator of selected post"
 
@@ -58,6 +62,7 @@ class DeletePost(BlogHandler):
   def post(self):
     if not self.user:
       self.redirect("/signin")
+    
     else:
       post_id = self.request.get("post_id")
       post_parent_id = self.request.get("post_parent_id")
@@ -118,8 +123,11 @@ class EditPost(BlogHandler):
       self.content = self.request.get("content")
 
       if self.subject and self.content and self.post_id:
-        self.editPost(self.post_id, self.subject, self.content, 
-                      self.post_parent_id)
+        if self.post_parent_id:
+          self.editPost(self.post_id, self.subject, self.content, 
+                        self.post_parent_id)
+        else:
+          self.editPost(self.post_id, self.subject, self.content)
       
       else:
         self.render_front(subject = self.subject,
