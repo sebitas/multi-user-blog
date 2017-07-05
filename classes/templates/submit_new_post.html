@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Make new post!</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Make new post!</h1>
     <h2>New Post!</h2>
     <form method="post" action="/newpost">
       <div>Subject</div>
@@ -15,5 +13,4 @@
       <input type="submit" name="">
     </form>
     {{error}}
-  </body>
-</html>
+{% endblock %}

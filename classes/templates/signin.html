@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block content %}
     <h1>Signin</h1>
     <form method="post" action="/signin">
       <label>Username</label>
@@ -17,5 +14,5 @@
       <input type="submit" name="">
     </form>
     <div>{{username_password_error}}</div>
-  </body>
-</html>
+{% endblock %}
+
