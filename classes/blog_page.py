@@ -239,7 +239,7 @@ class CommentPost(BlogHandler):
 
         if self.subject and self.content:
             a = BlogEntry(subject=subject, content=content,
-                          user_post_id=id_str, likes_count=0,
+                          user_post_id=id_str,
                           parent=main_comments_key(parent_post.key().id()))
             a.put()
         else:
