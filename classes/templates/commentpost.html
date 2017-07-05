@@ -24,7 +24,7 @@
       <h2 name ="subject" class ="subject">{{ i.subject }}</h2>
       <div name ="content" class ="content">{{ i.content | safe }}
       <div name ="created" class ="created">{{ i.created}}
-      <div name ="likes">Likes: {{ i.likes_count}}</div>
+      <div name ="likes">Likes: {{ i.likes}}</div>
 
       <form action="/blog/delete" method=post>
         <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
@@ -49,7 +49,7 @@
         <input type=hidden value="{{post_id}}" name="post_parent_id"></input>
         <input type="submit" value="UnLike"></input>
       </form>
-      
+
       <hr>
     {% endfor %}
 {% endblock %}
