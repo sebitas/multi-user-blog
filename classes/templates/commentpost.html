@@ -31,24 +31,15 @@
 
       <form action="/blog/delete" method=post>
         <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
+        <input type=hidden value="{{post_id}}" name="post_parent_id"></input>
         <input type="submit" value="Delete"></input>
       </form>
 
       <form action="/blog/editpost" method=post>
         <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
+        <input type=hidden value="{{post_id}}" name="post_parent_id"></input>
         <input type="submit" value="Edit"></input>
       </form>
-
-      <form action="/blog/likepost" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="Like"></input>
-      </form>
-
-      <form action="/blog/unlikepost" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="UnLike"></input>
-      </form>
-
       <hr>
     {% endfor %}
   </body>

@@ -23,7 +23,7 @@ class BlogEntry(db.Model):
   @classmethod
   def by_id(cls, uid, post_id = 'default'):
       return BlogEntry.get_by_id(long(uid), parent = main_comments_key(post_id))
-
+      
   @classmethod
   def like_post(cls, post_id, uid):
     post = cls.by_id(post_id)
