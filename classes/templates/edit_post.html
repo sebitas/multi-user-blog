@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Make new post!</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Make new post!</h1>
     <h2>Edit Post!</h2>
     <form method="post" action="/blog/editpost">
       <input type=hidden value="{{post_parent_id}}" name="post_parent_id"></input>
@@ -20,5 +18,4 @@
     </form>
     <div>{{error}}</div>
     <div>{{success}}</div>
-  </body>
-</html>
+{% endblock %}

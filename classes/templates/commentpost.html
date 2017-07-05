@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block content %}
     <h2>Comment Post!</h2>
     <form method="post" action="/blog/commentpost">
       <input type="hidden" name="post_id" value={{post_id}}>
@@ -55,5 +52,5 @@
       
       <hr>
     {% endfor %}
-  </body>
-</html>
+{% endblock %}
+

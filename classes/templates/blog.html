@@ -1,41 +1,36 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-  </head>
-  <body>
-    <h1>My Blog!</h1>
-    {% for i in posts %}
-      <h2 name ="subject" class ="subject">{{ i.subject }}</h2>
-      <div name ="content" class ="content">{{ i.content | safe }}
-      <div name ="created" class ="created">{{ i.created}}
-      <div name ="likes">Likes: {{ i.likes_count}}</div>
+{% extends "base.html" %}
+{% block content %}
+  <h1>My Blog!</h1>
+      {% for i in posts %}
+        <h2 name ="subject" class ="subject">{{ i.subject }}</h2>
+        <div name ="content" class ="content">{{ i.content | safe }}
+        <div name ="created" class ="created">{{ i.created }}
+        <div name ="likes">Likes: {{ i.likes_count }}</div>
 
-      <form action="/blog/delete" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="Delete"></input>
-      </form>
+        <form action="/blog/delete" method=post>
+          <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
+          <input type="submit" value="Delete"></input>
+        </form>
 
-      <form action="/blog/editpost" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="Edit"></input>
-      </form>
+        <form action="/blog/editpost" method=post>
+          <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
+          <input type="submit" value="Edit"></input>
+        </form>
 
-      <form action="/blog/likepost" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="Like"></input>
-      </form>
+        <form action="/blog/likepost" method=post>
+          <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
+          <input type="submit" value="Like"></input>
+        </form>
 
-      <form action="/blog/unlikepost" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="UnLike"></input>
-      </form>
+        <form action="/blog/unlikepost" method=post>
+          <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
+          <input type="submit" value="UnLike"></input>
+        </form>
 
-      <form action="/blog/commentpost" method=post>
-        <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
-        <input type="submit" value="Comment"></input>
-      </form>
-      <hr>
+        <form action="/blog/commentpost" method=post>
+          <input type=hidden value="{{ i.key().id() }}" name="post_id"></input>
+          <input type="submit" value="Comment"></input>
+        </form>
+        <hr>
     {% endfor %}
-  </body>
-</html>
+{% endblock %}

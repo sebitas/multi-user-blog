@@ -35,6 +35,6 @@ app = webapp2.WSGIApplication([('/newpost', NewPost),
                                ('/blog/unlikepost', UnLikePost),
                                ('/blog/commentpost', CommentPost)
                                ],
-                            debug=True)
+                            debug = True)
 
 
