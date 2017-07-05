@@ -149,8 +149,13 @@ class LikePost(BlogHandler):
       self.redirect('/signin')
 
     post_id = self.request.get("post_id")
+    post_parent_id = self.request.get("post_parent_id")
 
-    result = BlogEntry.like_post(post_id, str(self.user.key().id()))
+    if post_parent_id :
+      result = BlogEntry.like_post(post_id, str(self.user.key().id()), 
+                         post_parent_id)
+    else:
+      result = BlogEntry.like_post(post_id, str(self.user.key().id()))
 
     if not result:
       self.render_front(msg = "You cant't like this post")
@@ -169,8 +174,13 @@ class UnLikePost(BlogHandler):
       self.redirect('/signin')
 
     post_id = self.request.get("post_id")
+    post_parent_id = self.request.get("post_parent_id")
 
-    result = BlogEntry.unlike_post(post_id, str(self.user.key().id()))
+    if post_parent_id:
+      result = BlogEntry.unlike_post(post_id, str(self.user.key().id()),
+                                     post_parent_id)
+    else:
+      result = BlogEntry.unlike_post(post_id, str(self.user.key().id()))
 
     if not result:
       self.render_front(msg = "You cant't unlike this post")

@@ -23,10 +23,10 @@ class BlogEntry(db.Model):
   @classmethod
   def by_id(cls, uid, post_id = 'default'):
       return BlogEntry.get_by_id(long(uid), parent = main_comments_key(post_id))
-      
+
   @classmethod
-  def like_post(cls, post_id, uid):
-    post = cls.by_id(post_id)
+  def like_post(cls, post_id, uid, post_parent_id = 'default'):
+    post = cls.by_id(post_id, post_parent_id)
     result = True
 
     if post and uid != post.user_post_id:
@@ -42,8 +42,8 @@ class BlogEntry(db.Model):
     return result
 
   @classmethod
-  def unlike_post(cls, post_id, uid):
-    post = cls.by_id(post_id)
+  def unlike_post(cls, post_id, uid, post_parent_id = 'default'):
+    post = cls.by_id(post_id, post_parent_id)
     result = True
 
     if post and uid != post.user_post_id:
